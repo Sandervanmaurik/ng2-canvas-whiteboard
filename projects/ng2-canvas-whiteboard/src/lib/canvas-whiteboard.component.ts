@@ -1031,6 +1031,7 @@ export class CanvasWhiteboardComponent implements OnInit, AfterViewInit, OnChang
     }
 
     // fill the image in destination rectangle
+    // context.scale(2,2);
     context.drawImage(image, finalDrawX, finalDrawY, finalDrawWidth, finalDrawHeight, x, y, width, height);
   }
 
