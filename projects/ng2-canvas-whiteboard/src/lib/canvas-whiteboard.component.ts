@@ -23,7 +23,7 @@ import { cloneDeep, isEqual } from 'lodash-es';
 @Component({
   selector: 'canvas-whiteboard',
   template:
-      `
+    `
     <div class="canvas_wrapper_div">
       <div class="canvas_whiteboard_buttons">
         <canvas-whiteboard-shape-selector *ngIf="shapeSelectorEnabled"
@@ -147,10 +147,10 @@ export class CanvasWhiteboardComponent implements OnInit, AfterViewInit, OnChang
   @Output() onImageLoaded = new EventEmitter<any>();
   @Output() onSave = new EventEmitter<string | Blob>();
 
-  @ViewChild('canvas', {static: true}) canvas: ElementRef;
+  @ViewChild('canvas', { static: true }) canvas: ElementRef;
   context: CanvasRenderingContext2D;
 
-  @ViewChild('incompleteShapesCanvas', {static: true}) private _incompleteShapesCanvas: ElementRef;
+  @ViewChild('incompleteShapesCanvas', { static: true }) private _incompleteShapesCanvas: ElementRef;
   private _incompleteShapesCanvasContext: CanvasRenderingContext2D;
   private _incompleteShapesMap: Map<string, CanvasWhiteboardShape>;
 
@@ -179,9 +179,9 @@ export class CanvasWhiteboardComponent implements OnInit, AfterViewInit, OnChang
   canvasWhiteboardShapePreviewOptions: CanvasWhiteboardShapeOptions;
 
   constructor(private ngZone: NgZone,
-              private changeDetectorRef: ChangeDetectorRef,
-              private canvasWhiteboardService: CanvasWhiteboardService,
-              private canvasWhiteboardShapeService: CanvasWhiteboardShapeService) {
+    private changeDetectorRef: ChangeDetectorRef,
+    private canvasWhiteboardService: CanvasWhiteboardService,
+    private canvasWhiteboardShapeService: CanvasWhiteboardShapeService) {
     this._shapesMap = new Map<string, CanvasWhiteboardShape>();
     this._incompleteShapesMap = new Map<string, CanvasWhiteboardShape>();
     this.canvasWhiteboardShapePreviewOptions = this.generateShapePreviewOptions();
@@ -888,7 +888,7 @@ export class CanvasWhiteboardComponent implements OnInit, AfterViewInit, OnChang
     if (!update.selectedShapeOptions) {
       // Make a deep copy since we don't want some Shape implementation to change something by accident
       update.selectedShapeOptions = Object.assign(new CanvasWhiteboardShapeOptions(),
-        this.generateShapePreviewOptions(), {lineWidth: this.lineWidth});
+        this.generateShapePreviewOptions(), { lineWidth: this.lineWidth });
     }
   }
 
@@ -998,7 +998,8 @@ export class CanvasWhiteboardComponent implements OnInit, AfterViewInit, OnChang
     let finalDrawWidth: any;
     let finalDrawHeight: any;
     let aspectRatio = 1;
-
+    let scale = 4;
+    context.scale(scale, scale);
     // decide which gap to fill
     if (newWidth < width) {
       aspectRatio = width / newWidth;
@@ -1031,8 +1032,10 @@ export class CanvasWhiteboardComponent implements OnInit, AfterViewInit, OnChang
     }
 
     // fill the image in destination rectangle
-    // context.scale(2,2);
-    context.drawImage(image, finalDrawX, finalDrawY, finalDrawWidth, finalDrawHeight, x, y, width, height);
+    // context.scale(4,4);
+    // context.imageSmoothingQuality = 'high';
+    // console.log(context.imageSmoothingQuality);
+    context.drawImage(image, finalDrawX, finalDrawY, finalDrawWidth, finalDrawHeight, (x / scale), (y / scale), width, height);
   }
 
   /**
