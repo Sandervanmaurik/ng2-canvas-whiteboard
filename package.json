@@ -1,6 +1,6 @@
 {
   "name": "jasbit-ng2-canvas-whiteboard-workspace",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "scripts": {
     "build:ng2-canvas-whiteboard:prod": "ng build ng2-canvas-whiteboard --prod",
     "test:ng2-canvas-whiteboard": "ng test ng2-canvas-whiteboard",

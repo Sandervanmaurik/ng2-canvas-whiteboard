@@ -6,7 +6,7 @@ import {
   ViewChild,
   ElementRef,
   OnInit,
-  OnChanges, OnDestroy, AfterViewInit, NgZone, ChangeDetectorRef
+  OnChanges, OnDestroy, AfterViewInit, NgZone, ChangeDetectorRef, NgModule
 } from '@angular/core';
 import { CanvasWhiteboardUpdate, CanvasWhiteboardUpdateType } from './canvas-whiteboard-update.model';
 import { DEFAULT_STYLES } from './template';
@@ -85,6 +85,7 @@ import { cloneDeep, isEqual } from 'lodash-es';
   `,
   styles: [DEFAULT_STYLES]
 })
+
 export class CanvasWhiteboardComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
   @Input() options: CanvasWhiteboardOptions;
 
@@ -466,7 +467,7 @@ export class CanvasWhiteboardComponent implements OnInit, AfterViewInit, OnChang
       if (this.imageUrl) {
         this._loadImage(() => {
           this.context.save();
-          this._drawImage(this.context, this._imageElement, 0, 0, this.context.canvas.width, this.context.canvas.height, 0.5, 0.5);
+          this._drawImage(this.context, this._imageElement, 0, 0, this.context.canvas.width, this.context.canvas.height, 1, 1);
           this.context.restore();
           this._drawMissingUpdates();
           callbackFn && callbackFn();
@@ -968,12 +969,13 @@ export class CanvasWhiteboardComponent implements OnInit, AfterViewInit, OnChang
   private _drawImage(context: any, image: any, x: number, y: number, width: number, height: number, offsetX: number, offsetY: number): void {
     if (arguments.length === 2) {
       x = y = 0;
-      width = context.canvas.width;
-      height = context.canvas.height;
+      width = context.canvas.style.width;
+      height = context.canvas.style.height;
     }
 
-    offsetX = typeof offsetX === 'number' ? offsetX : 0.5;
-    offsetY = typeof offsetY === 'number' ? offsetY : 0.5;
+
+    offsetX = typeof offsetX === 'number' ? offsetX : 1;
+    offsetY = typeof offsetY === 'number' ? offsetY : 1;
 
     if (offsetX < 0) {
       offsetX = 0;
@@ -990,7 +992,11 @@ export class CanvasWhiteboardComponent implements OnInit, AfterViewInit, OnChang
 
     const imageWidth = image.width;
     const imageHeight = image.height;
+    console.log("ImageWidth: " + imageWidth);
+    console.log("ImageHeight: " + imageHeight);
     const radius = Math.min(width / imageWidth, height / imageHeight);
+    console.log("Radius: " + radius);
+
     let newWidth = imageWidth * radius;
     let newHeight = imageHeight * radius;
     let finalDrawX: any;
@@ -998,9 +1004,6 @@ export class CanvasWhiteboardComponent implements OnInit, AfterViewInit, OnChang
     let finalDrawWidth: any;
     let finalDrawHeight: any;
     let aspectRatio = 1;
-    let scale = 4;
-    context.scale(scale, scale);
-    // decide which gap to fill
     if (newWidth < width) {
       aspectRatio = width / newWidth;
     }
@@ -1010,9 +1013,12 @@ export class CanvasWhiteboardComponent implements OnInit, AfterViewInit, OnChang
     newWidth *= aspectRatio;
     newHeight *= aspectRatio;
 
+    console.log("aspectRatio: " + aspectRatio);
     // calculate source rectangle
-    finalDrawWidth = imageWidth / (newWidth / width);
-    finalDrawHeight = imageHeight / (newHeight / height);
+    // finalDrawWidth = imageWidth / (newWidth / width);
+    // finalDrawHeight = imageHeight / (newHeight / height);
+    finalDrawHeight = imageHeight;
+    finalDrawWidth = imageWidth;
 
     finalDrawX = (imageWidth - finalDrawWidth) * offsetX;
     finalDrawY = (imageHeight - finalDrawHeight) * offsetY;
@@ -1031,11 +1037,37 @@ export class CanvasWhiteboardComponent implements OnInit, AfterViewInit, OnChang
       finalDrawHeight = imageHeight;
     }
 
+    // octx.drawImage(image, 0, 0, oc.width, oc.height);
+    // octx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5);
+
+
     // fill the image in destination rectangle
-    // context.scale(4,4);
-    // context.imageSmoothingQuality = 'high';
+    // context.scale(4, 4);
+    context.imageSmoothingQuality = "high";
+    
+    context.canvas.width = finalDrawWidth;
+    context.canvas.height = finalDrawHeight;
+    this._incompleteShapesCanvas.nativeElement.width = finalDrawWidth;
+    this._incompleteShapesCanvas.nativeElement.height = finalDrawHeight;
+
     // console.log(context.imageSmoothingQuality);
-    context.drawImage(image, finalDrawX, finalDrawY, finalDrawWidth, finalDrawHeight, (x / scale), (y / scale), width, height);
+    console.log(context.imageSmoothingQuality);
+    console.log("final drawparameters:");
+    console.log(image);
+    console.log(context);
+    console.log("canvas height: " + context.canvas.height);
+    console.log("canvas width: " + context.canvas.width);
+    console.log("finalDrawX: " + finalDrawX);
+    console.log("finalDrawY: " + finalDrawY);
+    console.log("finalDrawWidth: " + finalDrawWidth);
+    console.log("finalDrawHeight: " + finalDrawHeight);
+    console.log("x: " + x);
+    console.log("y: " + y);
+    console.log("width: " + width);
+    console.log("height: " + height);
+
+
+    context.drawImage(image, finalDrawX, finalDrawY, finalDrawWidth , finalDrawHeight, x, y, finalDrawWidth, finalDrawHeight);
   }
 
   /**
