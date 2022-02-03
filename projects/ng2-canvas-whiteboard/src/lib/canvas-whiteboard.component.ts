@@ -1012,8 +1012,6 @@ export class CanvasWhiteboardComponent implements OnInit, AfterViewInit, OnChang
     }
     newWidth *= aspectRatio;
     newHeight *= aspectRatio;
-
-    console.log("aspectRatio: " + aspectRatio);
     // calculate source rectangle
     // finalDrawWidth = imageWidth / (newWidth / width);
     // finalDrawHeight = imageHeight / (newHeight / height);
@@ -1036,37 +1034,12 @@ export class CanvasWhiteboardComponent implements OnInit, AfterViewInit, OnChang
     if (finalDrawHeight > imageHeight) {
       finalDrawHeight = imageHeight;
     }
-
-    // octx.drawImage(image, 0, 0, oc.width, oc.height);
-    // octx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5);
-
-
-    // fill the image in destination rectangle
-    // context.scale(4, 4);
     context.imageSmoothingQuality = "high";
     
     context.canvas.width = finalDrawWidth;
     context.canvas.height = finalDrawHeight;
     this._incompleteShapesCanvas.nativeElement.width = finalDrawWidth;
     this._incompleteShapesCanvas.nativeElement.height = finalDrawHeight;
-
-    // console.log(context.imageSmoothingQuality);
-    console.log(context.imageSmoothingQuality);
-    console.log("final drawparameters:");
-    console.log(image);
-    console.log(context);
-    console.log("canvas height: " + context.canvas.height);
-    console.log("canvas width: " + context.canvas.width);
-    console.log("finalDrawX: " + finalDrawX);
-    console.log("finalDrawY: " + finalDrawY);
-    console.log("finalDrawWidth: " + finalDrawWidth);
-    console.log("finalDrawHeight: " + finalDrawHeight);
-    console.log("x: " + x);
-    console.log("y: " + y);
-    console.log("width: " + width);
-    console.log("height: " + height);
-
-
     context.drawImage(image, finalDrawX, finalDrawY, finalDrawWidth , finalDrawHeight, x, y, finalDrawWidth, finalDrawHeight);
   }
 
