@@ -992,10 +992,7 @@ export class CanvasWhiteboardComponent implements OnInit, AfterViewInit, OnChang
 
     const imageWidth = image.width;
     const imageHeight = image.height;
-    console.log("ImageWidth: " + imageWidth);
-    console.log("ImageHeight: " + imageHeight);
     const radius = Math.min(width / imageWidth, height / imageHeight);
-    console.log("Radius: " + radius);
 
     let newWidth = imageWidth * radius;
     let newHeight = imageHeight * radius;
