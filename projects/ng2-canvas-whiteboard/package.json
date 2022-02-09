@@ -1,6 +1,6 @@
 {
   "name": "jasbit-ng2-canvas-whiteboard",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "webfactory",
   "license": "MIT",
   "description": "A Canvas component for Angular which supports free drawing.",
