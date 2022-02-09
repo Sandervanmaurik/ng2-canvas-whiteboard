@@ -5,7 +5,7 @@ import {
   CanvasWhiteboardUpdate,
   CanvasWhiteboardOptions,
   CanvasWhiteboardShapeService, CircleShape, SmileyShape, StarShape, LineShape, RectangleShape
-} from 'ng2-canvas-whiteboard';
+} from 'jasbit-ng2-canvas-whiteboard';
 
 @Component({
   selector: 'app-root',
