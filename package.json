@@ -2,7 +2,7 @@
   "name": "jasbit-ng2-canvas-whiteboard-workspace",
   "version": "0.0.5",
   "scripts": {
-    "build:ng2-canvas-whiteboard:prod": "ng build ng2-canvas-whiteboard --prod",
+    "build:ng2-canvas-whiteboard:prod": "ng build jasbit-ng2-canvas-whiteboard --prod",
     "test:ng2-canvas-whiteboard": "ng test ng2-canvas-whiteboard",
     "serve:ng2-canvas-whiteboard-example": "ng serve ng2-canvas-whiteboard-example"
   },
@@ -17,6 +17,7 @@
     "@angular/platform-browser-dynamic": "10.0.6",
     "@angular/router": "10.0.6",
     "lodash-es": "4.17.15",
+    "pinch-zoom-js": "^2.3.4",
     "rxjs": "6.5.5",
     "tslib": "2.0.0",
     "zone.js": "0.10.3"

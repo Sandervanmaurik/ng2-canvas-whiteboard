@@ -19,6 +19,7 @@ import { CanvasWhiteboardShapeOptions } from './shapes/canvas-whiteboard-shape-o
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { cloneDeep, isEqual } from 'lodash-es';
+import PinchZoom from 'pinch-zoom-js';
 
 @Component({
   selector: 'canvas-whiteboard',
@@ -75,12 +76,14 @@ import { cloneDeep, isEqual } from 'lodash-es';
           <i [class]="saveDataButtonClass" aria-hidden="true"></i> {{saveDataButtonText}}
         </button>
       </div>
-      <canvas #canvas class="canvas_whiteboard"></canvas>
-      <canvas #incompleteShapesCanvas class="incomplete_shapes_canvas_whiteboard"
+      <div id="{{'canvasWhiteboard' + this.randomNumber}}" class="canvas-parent">
+        <canvas #canvas class="canvas_whiteboard"></canvas>
+        <canvas #incompleteShapesCanvas class="incomplete_shapes_canvas_whiteboard"
               (mousedown)="canvasUserEvents($event)" (mouseup)="canvasUserEvents($event)"
               (mousemove)="canvasUserEvents($event)" (mouseout)="canvasUserEvents($event)"
               (touchstart)="canvasUserEvents($event)" (touchmove)="canvasUserEvents($event)"
               (touchend)="canvasUserEvents($event)" (touchcancel)="canvasUserEvents($event)"></canvas>
+      </div>
     </div>
   `,
   styles: [DEFAULT_STYLES]
@@ -171,7 +174,8 @@ export class CanvasWhiteboardComponent implements OnInit, AfterViewInit, OnChang
   private _updatesNotDrawn: any = [];
 
   private _updateTimeout: any;
-
+  pz: PinchZoom;
+  randomNumber: number = Math.floor(Math.random() * 10000);
   private _canvasWhiteboardServiceSubscriptions: Subscription[] = [];
   private _resizeSubscription: Subscription;
   private _registeredShapesSubscription: Subscription;
@@ -198,6 +202,19 @@ export class CanvasWhiteboardComponent implements OnInit, AfterViewInit, OnChang
     this._initCanvasServiceObservables();
     this.context = this.canvas.nativeElement.getContext('2d');
     this._incompleteShapesCanvasContext = this._incompleteShapesCanvas.nativeElement.getContext('2d');
+    if (!this.randomNumber) {
+      this.randomNumber = Math.floor(Math.random() * 10000);
+    }
+    setTimeout(() => {
+      let el = document.querySelector('#canvasWhiteboard' + this.randomNumber);
+      this.pz = new PinchZoom(el as HTMLElement, {
+        onDoubleTap: (pinch, event) => {
+          event.preventDefault();
+          console.log(pinch, event);
+        }
+      });
+      this.pz.enable();
+    }, 2000);
   }
 
   /**
@@ -216,6 +233,19 @@ export class CanvasWhiteboardComponent implements OnInit, AfterViewInit, OnChang
     this._calculateCanvasWidthAndHeight();
     this._redrawHistory();
   }
+
+  // addEventListenersToCanvas() {
+  //   let canvas = document.getElementById("incompleteshapesCanvas" + this.randomNumber);
+  //   canvas.addEventListener("ontouchstart", this.canvasUserEvents.bind(this));
+  //   canvas.addEventListener("touchstart", this.canvasUserEvents.bind(this), false);
+  //   canvas.addEventListener("touchmove", this.canvasUserEvents.bind(this), false);
+  //   canvas.addEventListener("touchend", this.canvasUserEvents.bind(this), false);
+  //   canvas.addEventListener("touchcancel", this.canvasUserEvents.bind(this), false);
+  //   canvas.addEventListener("mousedown", this.canvasUserEvents.bind(this));
+  //   canvas.addEventListener("mouseup", this.canvasUserEvents.bind(this));
+  //   canvas.addEventListener("mousemove", this.canvasUserEvents.bind(this));
+  //   canvas.addEventListener("mousecancel", this.canvasUserEvents.bind(this));
+  // }
 
   /**
    * This method reads the options which are helpful since they can be really long when specified in HTML
@@ -511,6 +541,14 @@ export class CanvasWhiteboardComponent implements OnInit, AfterViewInit, OnChang
    */
   toggleDrawingEnabled(): void {
     this.drawingEnabled = !this.drawingEnabled;
+    if (this.drawingEnabled) {
+      this.pz.disable();
+      console.log("pinch zoom disabled");
+    }
+    else {
+      this.pz.enable();
+      console.log("pinch zoom enabled");
+    }
   }
 
   /**
@@ -1032,12 +1070,12 @@ export class CanvasWhiteboardComponent implements OnInit, AfterViewInit, OnChang
       finalDrawHeight = imageHeight;
     }
     context.imageSmoothingQuality = "high";
-    
+
     context.canvas.width = finalDrawWidth;
     context.canvas.height = finalDrawHeight;
     this._incompleteShapesCanvas.nativeElement.width = finalDrawWidth;
     this._incompleteShapesCanvas.nativeElement.height = finalDrawHeight;
-    context.drawImage(image, finalDrawX, finalDrawY, finalDrawWidth , finalDrawHeight, x, y, finalDrawWidth, finalDrawHeight);
+    context.drawImage(image, finalDrawX, finalDrawY, finalDrawWidth, finalDrawHeight, x, y, finalDrawWidth, finalDrawHeight);
   }
 
   /**

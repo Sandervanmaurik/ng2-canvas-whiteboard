@@ -43,6 +43,10 @@ export const DEFAULT_STYLES = `
         color: #fff;
     }
 }
+.canvas-parent{
+    height: 100%!important;
+    width:100%!important;
+}
 
 .canvas_whiteboard_buttons {
     padding: 5px;
