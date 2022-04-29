@@ -210,11 +210,10 @@ export class CanvasWhiteboardComponent implements OnInit, AfterViewInit, OnChang
       this.pz = new PinchZoom(el as HTMLElement, {
         onDoubleTap: (pinch, event) => {
           event.preventDefault();
-          console.log(pinch, event);
         }
       });
       this.pz.enable();
-    }, 2000);
+    }, 100);
   }
 
   /**
@@ -543,11 +542,9 @@ export class CanvasWhiteboardComponent implements OnInit, AfterViewInit, OnChang
     this.drawingEnabled = !this.drawingEnabled;
     if (this.drawingEnabled) {
       this.pz.disable();
-      console.log("pinch zoom disabled");
     }
     else {
       this.pz.enable();
-      console.log("pinch zoom enabled");
     }
   }
 
