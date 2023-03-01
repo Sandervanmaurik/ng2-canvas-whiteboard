@@ -2,11 +2,10 @@
   "name": "jasbit-ng2-canvas-whiteboard-workspace",
   "version": "0.0.6",
   "scripts": {
-    "build:ng2-canvas-whiteboard:prod": "ng build jasbit-ng2-canvas-whiteboard --prod",
+    "build:ng2-canvas-whiteboard:prod": "ng build ng2-canvas-whiteboard --configuration=production",
     "test:ng2-canvas-whiteboard": "ng test ng2-canvas-whiteboard",
     "serve:ng2-canvas-whiteboard-example": "ng serve ng2-canvas-whiteboard-example"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "15.2.0",
     "@angular/common": "15.2.0",
