@@ -1128,7 +1128,8 @@ export class CanvasWhiteboardComponent implements OnInit, AfterViewInit, OnChang
    * @param customFileName? The name of the file that should be downloaded
    */
   downloadCanvasImage(returnedDataType: string = 'image/png', downloadData?: string | Blob, customFileName?: string): void {
-    if (window.navigator.msSaveOrOpenBlob === undefined) {
+    let navVar: any = window.navigator;
+    if (!navVar || !navVar.msSaveorOpenBlob || navVar.msSaveOrOpenBlob === undefined) {
       const downloadLink = document.createElement('a');
       downloadLink.setAttribute('href', downloadData ? downloadData as string : this.generateCanvasDataUrl(returnedDataType));
 
@@ -1155,7 +1156,8 @@ export class CanvasWhiteboardComponent implements OnInit, AfterViewInit, OnChang
    * @param returnedDataType
    */
   private _saveCanvasBlob(blob: Blob, returnedDataType: string = 'image/png'): void {
-    window.navigator.msSaveOrOpenBlob(blob, 'canvas_drawing_' +
+    let navVar: any = window.navigator;
+    navVar.msSaveOrOpenBlob(blob, 'canvas_drawing_' +
       new Date().valueOf() + this._generateDataTypeString(returnedDataType));
   }
 
@@ -1168,7 +1170,8 @@ export class CanvasWhiteboardComponent implements OnInit, AfterViewInit, OnChang
    * @param returnedDataQuality
    */
   generateCanvasData(callback: any, returnedDataType: string = 'image/png', returnedDataQuality: number = 1): void {
-    if (window.navigator.msSaveOrOpenBlob === undefined) {
+    let navVar: any = window.navigator;
+    if (!navVar || !navVar.msSaveorOpenBlob || navVar.msSaveOrOpenBlob === undefined) {
       callback && callback(this.generateCanvasDataUrl(returnedDataType, returnedDataQuality));
     } else {
       this.generateCanvasBlob(callback, returnedDataType, returnedDataQuality);

@@ -29,7 +29,7 @@ export const DEFAULT_STYLES = `
 @media (max-width: 400px) {
      .canvas_whiteboard_buttons {
             position: absolute;
-            z-inde
+            z-index: 1;
             top: 0;
             width: 100%;
             text-align: center;

@@ -1,9 +1,6 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/ng2-canvas-whiteboard",
-  "whitelistedNonPeerDependencies": [
-    "lodash-es"
-  ],
   "assets": [
     "CHANGELOG.md",
     "README.md",
@@ -11,5 +8,8 @@
   ],
   "lib": {
     "entryFile": "src/public-api.ts"
-  }
+  },
+  "allowedNonPeerDependencies": [
+    "lodash-es"
+  ]
 }

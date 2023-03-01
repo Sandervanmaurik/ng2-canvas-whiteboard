@@ -1,19 +1,10 @@
 {
-  "name": "jasbit-ng2-canvas-whiteboard",
-  "version": "1.5.1",
-  "author": "webfactory",
+  "name": "@jasbit-software/ng-canvas-whiteboard",
+  "version": "2.0.0",
+  "author": "Jasbit",
   "license": "MIT",
-  "description": "A Canvas component for Angular which supports free drawing.",
   "keywords": [
-    "angular2",
-    "angular",
-    "angular4",
-    "angular5",
-    "angular6",
-    "angular7",
-    "angular8",
-    "angular9",
-    "angular10",
+    "angular13",
     "canvas",
     "drawing",
     "touch drawing",
@@ -29,7 +20,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/WebFactoryMk/ng2-canvas-whiteboard.git"
+    "url": "https://github.com/Sandervanmaurik/ng2-canvas-whiteboard.git"
   },
   "peerDependencies": {
     "@angular/common": "^13.2.0",
