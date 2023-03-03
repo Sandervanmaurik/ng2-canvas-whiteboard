@@ -4,6 +4,9 @@ import { CanvasWhiteboardPoint } from '../canvas-whiteboard-point.model';
 import { CanvasWhiteboardUpdate } from '../canvas-whiteboard-update.model';
 
 export class RectangleShape extends CanvasWhiteboardShape {
+  checkIfPointIsInShape(point: CanvasWhiteboardPoint): boolean {
+    throw new Error('Method not implemented.');
+  }
   width: number;
   height: number;
 

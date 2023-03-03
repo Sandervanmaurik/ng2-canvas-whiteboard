@@ -7,8 +7,10 @@ export abstract class CanvasWhiteboardShape {
   protected positionPoint: CanvasWhiteboardPoint;
   protected options: CanvasWhiteboardShapeOptions;
 
-  protected constructor(positionPoint?: CanvasWhiteboardPoint,
-                        options?: CanvasWhiteboardShapeOptions) {
+  protected constructor(
+    positionPoint?: CanvasWhiteboardPoint,
+    options?: CanvasWhiteboardShapeOptions
+  ) {
     this.positionPoint = positionPoint || new CanvasWhiteboardPoint(0, 0);
     this.options = options || new CanvasWhiteboardShapeOptions();
     this.isVisible = true;
@@ -19,10 +21,11 @@ export abstract class CanvasWhiteboardShape {
   abstract onUpdateReceived(update: CanvasWhiteboardUpdate): void;
 
   // noinspection TsLint
-  onStopReceived(update: CanvasWhiteboardUpdate): void {
-  }
+  onStopReceived(update: CanvasWhiteboardUpdate): void {}
 
   abstract draw(context: CanvasRenderingContext2D): void;
 
   abstract drawPreview(context: CanvasRenderingContext2D): void;
+
+  abstract checkIfPointIsInShape(point: CanvasWhiteboardPoint): boolean;
 }

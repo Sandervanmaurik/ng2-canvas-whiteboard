@@ -4,6 +4,9 @@ import { CanvasWhiteboardPoint } from '../canvas-whiteboard-point.model';
 import { CanvasWhiteboardUpdate } from '../canvas-whiteboard-update.model';
 
 export class LineShape extends CanvasWhiteboardShape {
+  checkIfPointIsInShape(point: CanvasWhiteboardPoint): boolean {
+    throw new Error('Method not implemented.');
+  }
   endPosition: CanvasWhiteboardPoint;
 
   constructor(positionPoint?: CanvasWhiteboardPoint,

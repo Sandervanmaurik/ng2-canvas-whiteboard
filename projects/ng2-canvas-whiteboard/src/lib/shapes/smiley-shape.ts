@@ -4,6 +4,9 @@ import { CanvasWhiteboardPoint } from '../canvas-whiteboard-point.model';
 import { CanvasWhiteboardUpdate } from '../canvas-whiteboard-update.model';
 
 export class SmileyShape extends CanvasWhiteboardShape {
+  checkIfPointIsInShape(point: CanvasWhiteboardPoint): boolean {
+    throw new Error('Method not implemented.');
+  }
   radius: number;
 
   constructor(positionPoint?: CanvasWhiteboardPoint, options?: CanvasWhiteboardShapeOptions, radius?: number) {

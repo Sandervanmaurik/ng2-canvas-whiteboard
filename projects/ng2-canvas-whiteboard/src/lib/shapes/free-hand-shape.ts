@@ -6,7 +6,10 @@ import { CanvasWhiteboardUpdate } from '../canvas-whiteboard-update.model';
 export class FreeHandShape extends CanvasWhiteboardShape {
   linePositions: CanvasWhiteboardPoint[];
 
-  constructor(positionPoint?: CanvasWhiteboardPoint, options?: CanvasWhiteboardShapeOptions) {
+  constructor(
+    positionPoint?: CanvasWhiteboardPoint,
+    options?: CanvasWhiteboardShapeOptions
+  ) {
     super(positionPoint, options);
     this.linePositions = [];
   }
@@ -35,12 +38,14 @@ export class FreeHandShape extends CanvasWhiteboardShape {
         const controlPoint1 = this.linePositions[i];
         const controlPoint2 = this.linePositions[i + 1];
         const endPoint = this.linePositions[i + 2];
-        context.bezierCurveTo(controlPoint1.x,
+        context.bezierCurveTo(
+          controlPoint1.x,
           controlPoint1.y,
           controlPoint2.x,
           controlPoint2.y,
           endPoint.x,
-          endPoint.y);
+          endPoint.y
+        );
         i += 2;
       } else {
         const linePosition = this.linePositions[i];
@@ -55,11 +60,20 @@ export class FreeHandShape extends CanvasWhiteboardShape {
   drawPreview(context: CanvasRenderingContext2D): void {
     this.positionPoint = new CanvasWhiteboardPoint(2, 2);
     this.linePositions = [
-      new CanvasWhiteboardPoint(context.canvas.width - 5, context.canvas.height * 0.3),
+      new CanvasWhiteboardPoint(
+        context.canvas.width - 5,
+        context.canvas.height * 0.3
+      ),
       // new CanvasWhiteboardPoint(context.canvas.width * 0.4, context.canvas.height * 0.6),
-      new CanvasWhiteboardPoint(context.canvas.width * 0.2, context.canvas.height * 0.4),
-      new CanvasWhiteboardPoint(context.canvas.width * 0.6, context.canvas.height * 0.8),
-      new CanvasWhiteboardPoint(context.canvas.width, context.canvas.height)
+      new CanvasWhiteboardPoint(
+        context.canvas.width * 0.2,
+        context.canvas.height * 0.4
+      ),
+      new CanvasWhiteboardPoint(
+        context.canvas.width * 0.6,
+        context.canvas.height * 0.8
+      ),
+      new CanvasWhiteboardPoint(context.canvas.width, context.canvas.height),
     ];
 
     this.draw(context);
@@ -67,5 +81,34 @@ export class FreeHandShape extends CanvasWhiteboardShape {
 
   onUpdateReceived(update: CanvasWhiteboardUpdate): void {
     this.linePositions.push(new CanvasWhiteboardPoint(update.x, update.y));
+  }
+
+  checkIfPointIsInShape(point: CanvasWhiteboardPoint): boolean {
+    let margin = 5;
+    let found = false;
+    if (this.linePositions.length === 0) {
+      found =
+        this.positionPoint.x > point.x - margin &&
+        this.positionPoint.x < point.x + margin &&
+        this.positionPoint.y > point.y - margin &&
+        this.positionPoint.y < point.y + margin
+          ? true
+          : false;
+      return found;
+    }
+
+    for (let lp of this.linePositions) {
+      found =
+        lp.x > point.x - margin &&
+        lp.x < point.x + margin &&
+        lp.y > point.y - margin &&
+        lp.y < point.y + margin
+          ? true
+          : false;
+      if (found) {
+        break;
+      }
+    }
+    return found;
   }
 }
