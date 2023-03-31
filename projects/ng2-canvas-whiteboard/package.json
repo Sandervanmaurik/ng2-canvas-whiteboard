@@ -23,8 +23,8 @@
     "url": "https://github.com/Sandervanmaurik/ng2-canvas-whiteboard.git"
   },
   "peerDependencies": {
-    "@angular/common": "^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0",
-    "@angular/core": "^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0",
+    "@angular/common": "^14.0.0",
+    "@angular/core": "^14.0.0",
     "rxjs": "^6.5.5",
     "pinch-zoom-js": "^2.3.5"
   },
