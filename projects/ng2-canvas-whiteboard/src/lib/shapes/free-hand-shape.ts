@@ -84,14 +84,14 @@ export class FreeHandShape extends CanvasWhiteboardShape {
   }
 
   checkIfPointIsInShape(point: CanvasWhiteboardPoint): boolean {
-    let margin = 5;
+    let margin = 30;
     let found = false;
     if (this.linePositions.length === 0) {
       found =
         this.positionPoint.x > point.x - margin &&
-        this.positionPoint.x < point.x + margin &&
-        this.positionPoint.y > point.y - margin &&
-        this.positionPoint.y < point.y + margin
+          this.positionPoint.x < point.x + margin &&
+          this.positionPoint.y > point.y - margin &&
+          this.positionPoint.y < point.y + margin
           ? true
           : false;
       return found;
@@ -100,9 +100,9 @@ export class FreeHandShape extends CanvasWhiteboardShape {
     for (let lp of this.linePositions) {
       found =
         lp.x > point.x - margin &&
-        lp.x < point.x + margin &&
-        lp.y > point.y - margin &&
-        lp.y < point.y + margin
+          lp.x < point.x + margin &&
+          lp.y > point.y - margin &&
+          lp.y < point.y + margin
           ? true
           : false;
       if (found) {

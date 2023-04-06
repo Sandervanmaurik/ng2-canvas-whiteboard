@@ -2,7 +2,6 @@ export const DEFAULT_STYLES = `
 .canvas_whiteboard_button {
     display: inline-block;
     outline: 0px;
-    padding-top: 7px;
     margin-bottom: 0;
     font-size: 14px;
     font-weight: 400;

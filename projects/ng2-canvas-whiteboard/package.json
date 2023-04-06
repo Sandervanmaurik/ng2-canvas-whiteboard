@@ -1,6 +1,6 @@
 {
   "name": "@jasbit-software/ng-canvas-whiteboard",
-  "version": "2.1.1",
+  "version": "2.2.5",
   "author": "Jasbit",
   "license": "MIT",
   "keywords": [
@@ -23,9 +23,9 @@
     "url": "https://github.com/Sandervanmaurik/ng2-canvas-whiteboard.git"
   },
   "peerDependencies": {
-    "@angular/common": "^14.0.0",
-    "@angular/core": "^14.0.0",
-    "rxjs": "^6.5.5",
+    "@angular/common": "^14.3.0",
+    "@angular/core": "^14.3.0",
+    "rxjs": "^7.5.0",
     "pinch-zoom-js": "^2.3.5"
   },
   "dependencies": {

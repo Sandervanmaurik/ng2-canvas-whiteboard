@@ -80,6 +80,7 @@ import PinchZoom from 'pinch-zoom-js';
         <button
           *ngIf="removeButtonEnabled"
           (click)="toggleRemovingEnabled()"
+          [class.canvas_whiteboard_button-draw_animated]="getRemoveEnabled()"
           class="canvas_whiteboard_button canvas_whiteboard_button-remove"
           type="button"
         >
@@ -178,7 +179,7 @@ export class CanvasWhiteboardComponent
   @Input() clearButtonText = '';
   @Input() undoButtonText = '';
   @Input() redoButtonText = '';
-  @Input() removeButtonText = 'Remove';
+  @Input() removeButtonText = '';
   @Input() saveDataButtonText = '';
   @Input() strokeColorPickerText = 'Stroke';
   @Input() fillColorPickerText = 'Fill';
@@ -650,6 +651,13 @@ export class CanvasWhiteboardComponent
   }
 
   /**
+   * Returns a value of whether the user clicked the remove button on the canvas.
+   */
+  getRemoveEnabled(): boolean {
+    return this.removingEnabled;
+  }
+
+  /**
    * Toggles drawing on the canvas. It is called via the draw button on the canvas.
    */
   toggleDrawingEnabled(): void {
@@ -895,12 +903,15 @@ export class CanvasWhiteboardComponent
    */
   private handleRemoveShape(event: any) {
     if (event.type !== 'mouseup' && event.type !== 'touchend') return;
-    const eventPosition: CanvasWhiteboardPoint = {
-      x: event.offsetX,
-      y: event.offsetY,
+    const eventPosition: CanvasWhiteboardPoint =
+      this._getCanvasEventPosition(event);
+    const actualPosition: CanvasWhiteboardPoint = {
+      ...eventPosition,
+      x: eventPosition.x * this.context.canvas.width,
+      y: eventPosition.y * this.context.canvas.height,
     };
     this._shapesMap.forEach((shape, key) => {
-      if (shape.checkIfPointIsInShape(eventPosition)) {
+      if (shape.checkIfPointIsInShape(actualPosition)) {
         this._undoCanvas(key);
       }
     });
